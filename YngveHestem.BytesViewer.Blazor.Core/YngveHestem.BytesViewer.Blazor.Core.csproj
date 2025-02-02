@@ -5,10 +5,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Description>An interface for viewing different data in a Blazor-project.</Description>
     <PackageReleaseNotes>
-        - Initial release.
+        - Changed the return types of the interface to be async.
+        - Added a FirstOrDefault-extension to IEnumerables of IBytesView to make getting the correct IBytesView a little easier.
     </PackageReleaseNotes>
     <Authors>Yngve J. K. Hestem</Authors>
     <Copyright>Copyright (c) Yngve J. K. Hestem 2025</Copyright>
@@ -18,5 +19,9 @@
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
 </Project>

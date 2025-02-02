@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YngveHestem.BytesViewer.Bla
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{6557DD34-65B7-445E-9A8B-5777E5484060}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YngveHestem.BytesViewer.Blazor.MediaPlayer", "YngveHestem.BytesViewer.MediaPlayer\YngveHestem.BytesViewer.Blazor.MediaPlayer.csproj", "{865FA5CD-14C5-471A-9D19-8A2846CC42A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6557DD34-65B7-445E-9A8B-5777E5484060}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6557DD34-65B7-445E-9A8B-5777E5484060}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6557DD34-65B7-445E-9A8B-5777E5484060}.Release|Any CPU.Build.0 = Release|Any CPU
+		{865FA5CD-14C5-471A-9D19-8A2846CC42A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{865FA5CD-14C5-471A-9D19-8A2846CC42A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{865FA5CD-14C5-471A-9D19-8A2846CC42A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{865FA5CD-14C5-471A-9D19-8A2846CC42A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,7 +9,7 @@ public interface IBytesView
     /// <param name="bytes">The bytes that shall be shown. This parameter can be null, but some implementations might want to require it, so read the implementations documentation of what is used/required.</param>
     /// <param name="extension">The given extension with a leading dot. This parameter can be null, but some implementations might require it, so read the implementations documentation of what is used/required.</param>
     /// <returns></returns>
-    public bool CanShowBytes(string mimeType, byte[]? bytes = null, string? extension = null);
+    public Task<bool> CanShowBytes(string mimeType, byte[]? bytes = null, string? extension = null);
     
     /// <summary>
     /// Gets the parameters for the component that will be created to show the data the bytes contains.
@@ -20,7 +20,7 @@ public interface IBytesView
     /// <param name="bytes">The bytes that shall be shown.</param>
     /// <param name="extension">The given extension with a leading dot. This parameter can be null, but some implementations might require it.</param>
     /// <returns>A dictionary containing the component parameters.</returns>
-    public Dictionary<string, object> GetComponentParameters(string mimeType, byte[] bytes, string? extension = null);
+    public Task<Dictionary<string, object>> GetComponentParameters(string mimeType, byte[] bytes, string? extension = null);
 
     /// <summary>
     /// Returns the type of razor-component that will be created. The parameters are still sent in if an implementation send out different types based on the data.
@@ -29,5 +29,5 @@ public interface IBytesView
     /// <param name="bytes">The bytes that shall be shown. This parameter can be null, but some implementations might want to require it, so read the implementations documentation of what is used/required.</param>
     /// <param name="extension">The given extension with a leading dot. This parameter can be null, but some implementations might require it, so read the implementations documentation of what is used/required.</param>
     /// <returns>The type that should be created to show the data.</returns>
-    public Type GetComponentType(string mimeType, byte[]? bytes = null, string? extension = null);
+    public Task<Type> GetComponentType(string mimeType, byte[]? bytes = null, string? extension = null);
 }

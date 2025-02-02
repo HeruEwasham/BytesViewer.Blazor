@@ -18,21 +18,9 @@ To use this interface in an application, you would first have one or more implem
 
 Then you would use a DynamicComponent and give the returned value of GetComponentParameters(..)-method and GetComponentType(..)-method to let it create the correct thing to show.
 
-### Code-example
+### Example
 
-This should be used in a razor-page.
-
-```
-@if (_byteViewImplementations.Any(v => v.CanShowBytes(mimeType, dataAsBytes, extension)))
-{
-    var viewImp = _byteViewImplementations.First(v => v.CanShowBytes(mimeType, dataAsBytes, extension));
-    <DynamicComponent Type="@viewImp.GetComponentType(mimeType, dataAsBytes, extension)" Parameters="@viewImp.GetComponentParameters(mimeType, dataAsBytes, extension)"></DynamicComponent>
-}
-```
-
-### Working example
-
-To see a full working example, look at the TestProject in the repository.
+To see a working example, look at the TestProject in the repository.
 
 ## To create your own implementation
 

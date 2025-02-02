@@ -1,11 +1,8 @@
 ﻿@page "/"
 @using YngveHestem.BytesViewer.Blazor.Core
+@using YngveHestem.BytesViewer.Blazor.MediaPlayer
 
 <PageTitle>Home</PageTitle>
-
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
 
 <RadzenCard Variant="Variant.Outlined">
             <RadzenText TextStyle="TextStyle.H2">Choose a file</RadzenText>
@@ -28,7 +25,7 @@ Welcome to your new app.
 
     private IBytesView[] _bytesViewImplementations = new IBytesView[]
     {
-
+        new MediaPlayerView()
     };
 
     async Task OnClientChange(UploadChangeEventArgs args)
@@ -63,7 +60,7 @@ Welcome to your new app.
                     return;
                 }
                 var extension = Path.GetExtension(file.Name);
-                var viewImp = _bytesViewImplementations.FirstOrDefault(vi => vi.CanShowBytes(file.ContentType, data, extension));
+                var viewImp = await _bytesViewImplementations.FirstOrDefault(file.ContentType, data, extension);
                 if (viewImp == null)
                 {
                     _bytesViewParameters = new Dictionary<string, object>
@@ -74,8 +71,8 @@ Welcome to your new app.
                     _bytesViewType = typeof(RadzenText);
                     return;
                 }
-                _bytesViewParameters = viewImp.GetComponentParameters(file.ContentType, data, extension);
-                _bytesViewType = viewImp.GetComponentType(file.ContentType, data, extension);
+                _bytesViewParameters = await viewImp.GetComponentParameters(file.ContentType, data, extension);
+                _bytesViewType = await viewImp.GetComponentType(file.ContentType, data, extension);
             }
             catch (Exception ex)
             {

@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../YngveHestem.BytesViewer.Blazor.Core/YngveHestem.BytesViewer.Blazor.Core.csproj" />
+    <ProjectReference Include="../YngveHestem.BytesViewer.MediaPlayer/YngveHestem.BytesViewer.Blazor.MediaPlayer.csproj" />
   </ItemGroup>
 
 </Project>
