@@ -1,0 +1,92 @@
+﻿@page "/"
+@using YngveHestem.BytesViewer.Blazor.Core
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<RadzenCard Variant="Variant.Outlined">
+            <RadzenText TextStyle="TextStyle.H2">Choose a file</RadzenText>
+            <RadzenUpload Multiple="true" Change=@OnClientChange Style="width: 100%" MaxFileCount=1
+                            InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "select file" }})" />
+</RadzenCard>
+
+<RadzenCard>
+    <DynamicComponent Parameters="_bytesViewParameters" Type="_bytesViewType"></DynamicComponent>
+</RadzenCard>
+
+@code {
+    private Dictionary<string, object> _bytesViewParameters = new Dictionary<string, object>
+    {
+        { "Text", "Upload a file to see it viewed." },
+        { "TextStyle", TextStyle.Body1 }
+    };
+
+    private Type _bytesViewType = typeof(RadzenText);
+
+    private IBytesView[] _bytesViewImplementations = new IBytesView[]
+    {
+
+    };
+
+    async Task OnClientChange(UploadChangeEventArgs args)
+    {
+        Console.WriteLine($"Client-side upload changed");
+
+        foreach (var file in args.Files)
+        {
+            Console.WriteLine($"File: {file.Name} / {file.Size} bytes");
+
+            try
+            {
+                byte[] data;
+                long maxFileSize = 10 * 1024 * 1024;
+                // read file
+                using (var stream = file.OpenReadStream(maxFileSize))
+                {
+                    using (var memStream = new MemoryStream())
+                    {
+                        await stream.CopyToAsync(memStream);
+                        data = memStream.ToArray();
+                    }
+                }
+                if (data == null)
+                {
+                    _bytesViewParameters = new Dictionary<string, object>
+                    {
+                        { "Text", "We have not gotten any data from the file. Something have gotten wrong." },
+                        { "TextStyle", TextStyle.Body1 }
+                    };
+                    _bytesViewType = typeof(RadzenText);
+                    return;
+                }
+                var extension = Path.GetExtension(file.Name);
+                var viewImp = _bytesViewImplementations.FirstOrDefault(vi => vi.CanShowBytes(file.ContentType, data, extension));
+                if (viewImp == null)
+                {
+                    _bytesViewParameters = new Dictionary<string, object>
+                    {
+                        { "Text", $"Sorry. It seems we have no implementation who can show the file {file.Name}. Which has the mime type \"{file.ContentType}\"." },
+                        { "TextStyle", TextStyle.Body1 }
+                    };
+                    _bytesViewType = typeof(RadzenText);
+                    return;
+                }
+                _bytesViewParameters = viewImp.GetComponentParameters(file.ContentType, data, extension);
+                _bytesViewType = viewImp.GetComponentType(file.ContentType, data, extension);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Client-side file read error with file {file.Name}: {ex.Message}");
+                _bytesViewParameters = new Dictionary<string, object>
+                {
+                    { "Text", $"Client-side file read error with file {file.Name}: {ex.Message}" },
+                    { "TextStyle", TextStyle.Body1 }
+                };
+                _bytesViewType = typeof(RadzenText);
+            }
+        }
+    }
+}
